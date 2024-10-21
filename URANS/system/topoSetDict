@@ -1,0 +1,58 @@
+/*--------------------------------*- C++ -*---------------------------------*\
+| ========                 |                                                 |
+| \      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \    /   O peration     | Version:  v1812                                 |
+|   \  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \/     M anipulation  |                                                 |
+\*--------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+actions
+(
+
+////////////////////////////	
+    {
+        name    blade1;
+        type    faceSet;
+        action  new;
+        source  patchToCell;
+        sourceInfo
+        {
+		name "blade";
+        }
+    }
+    {
+        name    section1Cell;
+        type    cellSet;
+        action  new;
+	source cylinderToCell;
+	sourceInfo
+	{
+		p1 (0.0 0.0 0.2);
+		p2 (0.0 0.0 0.22);
+		radius 0.05;
+	}
+    }
+    {
+	name	section1Face;
+	type	faceSet;
+	action	new;
+	source	cellToFace;
+	sourceInfo
+	{
+		set section1Cell;
+		option all;
+	}
+    }
+    
+
+);
