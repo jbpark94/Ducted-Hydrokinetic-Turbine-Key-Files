@@ -1,0 +1,304 @@
+# updated_00382.csm written by ocsmSave (v1.20)
+
+# Constant, Design, and Output Parameters:
+despmtr   Rblade       0.95757
+dimension chord   1   9
+despmtr   chord[1,:]   "     0.11718;     0.12513;     0.15722;     0.15941;     0.15526;     0.14089;     0.12159;     0.09542;     0.02360;"
+dimension twist   1   9
+despmtr   twist[1,:]   "    31.86512;    39.09583;    29.51151;    24.57314;    20.53506;    17.74386;    16.03606;    14.05150;    13.66700;"
+despmtr   hub0_x       0.74613
+despmtr   hub1_z       0.05601
+despmtr   hub2_z       0.08650
+despmtr   hub3_x       1.52744
+despmtr   duct_scale       0.66359
+despmtr   ductAOA       5.49404
+dimension cst_uDuct   1   6
+despmtr   cst_uDuct[1,:]   "     0.06048;     0.30036;     0.00127;     0.57429;    -0.04876;     1.15519;"
+dimension cst_lDuct   1   6
+despmtr   cst_lDuct[1,:]   "    -0.03166;     0.21163;     0.17559;     0.34131;     0.09310;     1.04395;"
+
+# Global Attributes:
+
+# Branches:
+set       Rmax 1.29019
+set       Rhub (0.4)/2
+set       Lhub 0.780
+set       duct_scale0 1.5065*2
+set       Rblade0 1.0
+set       hub1_x 0.8928*hub0_x
+set       hub2_x 0.7905*hub3_x
+set       hub3_z 0.015
+set       hub0_r 0.025/hub0_x
+dimension cst_u25   1   6
+set       cst_u25 0.3751;0.3299;0.5545;0.3612;0.4109;0.3283
+dimension cst_l25   1   6
+set       cst_l25 -0.1535;-0.2724;-0.1866;-0.1959;-0.0837;0.2303
+dimension cst_u30   1   6
+set       cst_u30 0.3236;0.3119;0.4732;0.3539;0.3555;0.3303
+dimension cst_l30   1   6
+set       cst_l30 -0.1391;-0.1984;-0.1781;-0.1161;-0.0796;0.2471
+dimension cst_u40   1   6
+set       cst_u40 0.2956;0.2936;0.4327;0.3406;0.3338;0.3283
+dimension cst_l40   1   6
+set       cst_l40 -0.1305;-0.1523;-0.1721;-0.0699;-0.0805;0.2560
+dimension cst_u50   1   6
+set       cst_u50 0.2801;0.2841;0.4098;0.3338;0.3214;0.3271
+dimension cst_l50   1   6
+set       cst_l50 -0.1250;-0.1279;-0.1679;-0.0452;-0.0801;0.2607
+dimension cst_u60   1   6
+set       cst_u60 0.2659;0.2759;0.3885;0.3279;0.3097;0.3261
+dimension cst_l60   1   6
+set       cst_l60 -0.1195;-0.1065;-0.1634;-0.0232;-0.0794;0.2650
+dimension cst_u70   1   6
+set       cst_u70 0.2516;0.2680;0.3665;0.3231;0.2969;0.3261
+dimension cst_l70   1   6
+set       cst_l70 -0.1136;-0.0857;-0.1584;-0.0015;-0.0785;0.2695
+dimension cst_u80   1   6
+set       cst_u80 0.2375;0.2601;0.3446;0.3185;0.2834;0.3265
+dimension cst_l80   1   6
+set       cst_l80 -0.1073;-0.0653;-0.1529;0.0198;-0.0769;0.2739
+dimension cst_u90   1   6
+set       cst_u90 0.2234;0.2520;0.3230;0.3131;0.2700;0.3260
+dimension cst_l90   1   6
+set       cst_l90 -0.1005;-0.0457;-0.1464;0.0398;-0.0735;0.2777
+dimension cst_u100   1   6
+set       cst_u100 0.2094;0.2437;0.3018;0.3073;0.2566;0.3252
+dimension cst_l100   1   6
+set       cst_l100 -0.0933;-0.0269;-0.1389;0.0589;-0.0690;0.2810
+dimension class   1   2
+dimension ztail   1   2
+set       class 0.5;1.0;
+set       ztail 0.0025;-.0025;
+set       trans_x -0.5
+set       trans_x2 -0.01*Rblade
+set       trans_y2 -0.025*Rblade
+mark
+udparg    kulfan   class   class
+udparg    kulfan   ztail   ztail
+udparg    kulfan   aupper   cst_uDuct
+udprim    kulfan   alower   cst_lDuct
+translate -1   0   0
+scale     duct_scale0   0   0   0
+scale     duct_scale   0   0   0
+rotatez   -ductAOA   0   0
+mirror    1   0   0   0
+rotatex   90   0   0
+mirror    0   0   1   0
+translate -2.165103*duct_scale   0   Rmax
+revolve   0   0   0   1   0   0   120
+store     duct1   0   0
+restore   duct1   0
+rotatex   120   0   0
+store     duct2   0   0
+restore   duct2   0
+rotatex   120   0   0
+store     duct3   0   0
+restore   duct1   0
+restore   duct2   0
+restore   duct3   0
+union     0   0   0
+union     0   0   0
+store     Duct   0   0
+mark
+udparg    kulfan   class   class
+udparg    kulfan   ztail   ztail
+udparg    kulfan   aupper   cst_u25
+udprim    kulfan   alower   cst_l25
+translate trans_x   0   0
+scale     Rblade0*chord[1,1]   0   0   0
+rotatez   90   0   0
+mirror    0   1   0   0
+translate 0   0   Rblade0*0.25+(Rblade-Rblade0*0.25)*(0.25-0.25)/0.75
+rotatez   -twist[1,1]   0   0
+udparg    kulfan   class   class
+udparg    kulfan   ztail   ztail
+udparg    kulfan   aupper   cst_u30
+udprim    kulfan   alower   cst_l30
+translate trans_x   0   0
+scale     Rblade0*chord[1,2]   0   0   0
+rotatez   90   0   0
+mirror    0   1   0   0
+translate 0   0   Rblade0*0.25+(Rblade-Rblade0*0.25)*(0.3-0.25)/0.75
+rotatez   -twist[1,2]   0   0
+udparg    kulfan   class   class
+udparg    kulfan   ztail   ztail
+udparg    kulfan   aupper   cst_u40
+udprim    kulfan   alower   cst_l40
+translate trans_x   0   0
+scale     Rblade0*chord[1,3]   0   0   0
+rotatez   90   0   0
+mirror    0   1   0   0
+translate 0   0   Rblade0*0.25+(Rblade-Rblade0*0.25)*(0.4-0.25)/0.75
+rotatez   -twist[1,3]   0   0
+udparg    kulfan   class   class
+udparg    kulfan   ztail   ztail
+udparg    kulfan   aupper   cst_u50
+udprim    kulfan   alower   cst_l50
+translate trans_x   0   0
+scale     Rblade0*chord[1,4]   0   0   0
+rotatez   90   0   0
+mirror    0   1   0   0
+translate 0   0   Rblade0*0.25+(Rblade-Rblade0*0.25)*(0.5-0.25)/0.75
+rotatez   -twist[1,4]   0   0
+udparg    kulfan   class   class
+udparg    kulfan   ztail   ztail
+udparg    kulfan   aupper   cst_u60
+udprim    kulfan   alower   cst_l60
+translate trans_x   0   0
+scale     Rblade0*chord[1,5]   0   0   0
+rotatez   90   0   0
+mirror    0   1   0   0
+translate 0   0   Rblade0*0.25+(Rblade-Rblade0*0.25)*(0.6-0.25)/0.75
+rotatez   -twist[1,5]   0   0
+udparg    kulfan   class   class
+udparg    kulfan   ztail   ztail
+udparg    kulfan   aupper   cst_u70
+udprim    kulfan   alower   cst_l70
+translate trans_x   0   0
+scale     Rblade0*chord[1,6]   0   0   0
+rotatez   90   0   0
+mirror    0   1   0   0
+translate 0   0   Rblade0*0.25+(Rblade-Rblade0*0.25)*(0.7-0.25)/0.75
+rotatez   -twist[1,6]   0   0
+udparg    kulfan   class   class
+udparg    kulfan   ztail   ztail
+udparg    kulfan   aupper   cst_u80
+udprim    kulfan   alower   cst_l80
+translate trans_x   0   0
+scale     Rblade0*chord[1,7]   0   0   0
+rotatez   90   0   0
+mirror    0   1   0   0
+translate 0   0   Rblade0*0.25+(Rblade-Rblade0*0.25)*(0.8-0.25)/0.75
+rotatez   -twist[1,7]   0   0
+udparg    kulfan   class   class
+udparg    kulfan   ztail   ztail
+udparg    kulfan   aupper   cst_u90
+udprim    kulfan   alower   cst_l90
+translate trans_x   0   0
+scale     Rblade0*chord[1,8]   0   0   0
+rotatez   90   0   0
+mirror    0   1   0   0
+translate 0   0   Rblade0*0.25+(Rblade-Rblade0*0.25)*(0.9-0.25)/0.75
+rotatez   -twist[1,8]   0   0
+udparg    kulfan   class   class
+udparg    kulfan   ztail   ztail
+udparg    kulfan   aupper   cst_u100
+udprim    kulfan   alower   cst_l100
+translate trans_x   0   0
+scale     Rblade0*chord[1,9]   0   0   0
+rotatez   90   0   0
+mirror    0   1   0   0
+translate 0   0   Rblade0*0.25+(Rblade-Rblade0*0.25)*(1.0-0.25)/0.75
+rotatez   -twist[1,9]   0   0
+blend     0   0   0   0   0
+translate trans_x2   trans_y2   0
+store     blade1_2   0   0
+mark
+skbeg     0.5*cosd(0.5)   0.5*sind(0.5)   0   0
+   cirarc    0.5*cosd(45)   0.5*sind(45)   0   -0.5   0   0
+   cirarc    -0.5*cosd(45)   -0.5*sind(45)   0   0.5*cosd(0.5)   -0.5*sind(0.5)   0
+   cirarc    0.5*cosd(0.25)   -0.5*sind(0.25)   0   0.5*cosd(0.5)   0.5*sind(0.5)   0
+skend     0
+scale     Rblade0*0.02   0   0   0
+rotatez   90   0   0
+mirror    0   1   0   0
+translate 0   0   Rblade0*0.1
+rotatez   -20   0   0
+skbeg     0.5*cosd(0.5)   0.5*sind(0.5)   0   0
+   cirarc    0.5*cosd(45)   0.5*sind(45)   0   -0.5   0   0
+   cirarc    -0.5*cosd(45)   -0.5*sind(45)   0   0.5*cosd(0.5)   -0.5*sind(0.5)   0
+   cirarc    0.5*cosd(0.25)   -0.5*sind(0.25)   0   0.5*cosd(0.5)   0.5*sind(0.5)   0
+skend     0
+scale     Rblade0*0.02   0   0   0
+rotatez   90   0   0
+mirror    0   1   0   0
+translate 0   0   Rblade0*0.145
+rotatez   -20   0   0
+rule      0   0
+mark
+skbeg     0.5*cosd(0.5)   0.5*sind(0.5)   0   0
+   cirarc    0.5*cosd(45)   0.5*sind(45)   0   -0.5   0   0
+   cirarc    -0.5*cosd(45)   -0.5*sind(45)   0   0.5*cosd(0.5)   -0.5*sind(0.5)   0
+   cirarc    0.5*cosd(0.25)   -0.5*sind(0.25)   0   0.5*cosd(0.5)   0.5*sind(0.5)   0
+skend     0
+scale     Rblade0*0.02   0   0   0
+rotatez   90   0   0
+mirror    0   1   0   0
+translate 0   0   Rblade0*0.145
+rotatez   -20   0   0
+udparg    kulfan   class   class
+udparg    kulfan   ztail   ztail
+udparg    kulfan   aupper   cst_u25
+udprim    kulfan   alower   cst_l25
+translate trans_x   0   0
+scale     Rblade0*chord[1,1]   0   0   0
+rotatez   90   0   0
+mirror    0   1   0   0
+translate 0   0   Rblade0*0.25
+rotatez   -twist[1,1]   0   0
+translate trans_x2   trans_y2   0
+blend     0   0   0   0   0
+union     0   0   0
+store     blade1_1   0   0
+restore   blade1_1   0
+restore   blade1_2   0
+union     0   0   0
+store     blade   0   0
+mark
+udprim    supell   rx   hub3_z   ry   hub3_z   n   2.0
+rotatey   90   0   0
+translate -hub3_x   0   0
+udprim    supell   rx   hub2_z   ry   hub2_z   n   2.0
+rotatey   90   0   0
+translate -hub2_x   0   0
+udprim    supell   rx   Rhub   ry   Rhub   n   2.0
+rotatey   90   0   0
+translate 0.05-Lhub   0   0
+udprim    supell   rx   Rhub   ry   Rhub   n   2.0
+rotatey   90   0   0
+translate 0.05-Lhub   0   0
+udprim    supell   rx   Rhub   ry   Rhub   n   2.0
+rotatey   90   0   0
+translate 0.05   0   0
+udprim    supell   rx   Rhub   ry   Rhub   n   2.0
+rotatey   90   0   0
+translate 0.05   0   0
+udprim    supell   rx   hub1_z   ry   hub1_z   n   2.0
+rotatey   90   0   0
+translate hub1_x   0   0
+point     hub0_x   0   0
+blend     0   hub0_r;0;1;0;hub0_r;0;0;1   0   0   0
+store     hub1   0   0
+restore   hub1   0
+box       0.05-Lhub   -2*Rhub   -2*Rhub   Lhub   2*2*Rhub   2*2*Rhub
+intersect none   1   0
+store     hub_cyl   0   0
+restore   hub1   0
+box       0.05   -2*Rhub   -2*Rhub   0.05+hub0_x   2*2*Rhub   2*2*Rhub
+intersect none   1   0
+store     hub_front   0   0
+restore   hub1   0
+box       -hub3_x   -2*Rhub   -2*Rhub   hub3_x-Lhub+0.05   2*2*Rhub   2*2*Rhub
+intersect none   1   0
+store     hub_rear   0   0
+restore   hub_front   0
+restore   hub_cyl   0
+restore   hub_rear   0
+union     0   0   0
+union     0   0   0
+store     hub   0   0
+mark
+restore   blade   0
+restore   blade   0
+rotatex   120   0   0
+restore   blade   0
+rotatex   240   0   0
+restore   hub   0
+union     0   0   0
+union     0   0   0
+union     0   0   0
+store     BladeHub   0   0
+restore   Duct   0
+restore   BladeHub   0
+
+end
