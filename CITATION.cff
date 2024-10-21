@@ -1,0 +1,7 @@
+cff-version: 1.2.0
+message: "If you use this, please cite it as below."
+authors:
+- family-names: "Park"
+  given-names: "Jeongbin"
+title: "Key files for ducted hydrokinetic turbine optimization and re-evaluation"
+url: "https://github.com/jbpark94/Ducted-Hydrokinetic-Turbine-Key-Files.git"
